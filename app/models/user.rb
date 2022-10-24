@@ -10,11 +10,10 @@ class User < ApplicationRecord
   has_many :book_comments, dependent: :destroy
 
   # フォローフォロワー用追記
-  has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
-  has_many :list_of_followers, through: :relationships, source: :followed
-
-  has_many :followed_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
-  has_many :list_of_followed, through: :followed_relationships, source: :follower
+  has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :following_user, through: :follower, source: :followed
+  has_many :follower_user, through: :followed, source: :follower
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
@@ -24,12 +23,12 @@ class User < ApplicationRecord
   end
 
   def follow(user_id)
-    relationships.create(followed_id: user_id)
+    follower.create(followed_id: user_id)
   end
   def unfollow(user_id)
-    relationships.find_by(followed_id: user_id).destroy
+    follower.find_by(followed_id: user_id).destroy
   end
   def following?(user)
-    list_of_followed.include?(user)
+    following_user.include?(user)
   end
 end

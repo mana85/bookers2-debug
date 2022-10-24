@@ -10,9 +10,10 @@ Rails.application.routes.draw do
     resource :book_comments, only: [:create, :destroy]
   end
   resources :users, only: [:index,:show,:edit,:update] do
+    member do
+      get :follows, :followers
+    end
     resource :relationships, only: [:create, :destroy]
-    get 'list_of_followed' => 'relationships#list_of_followed', as: 'list_of_followed'
-    get 'list_of_followers' => 'relationships#list_of_followers', as: 'list_of_followers'
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

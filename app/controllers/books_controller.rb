@@ -6,12 +6,14 @@ class BooksController < ApplicationController
     @user = User.find(@book.user_id)
     @book_comments = BookComment.where(book_id: @book)
     @book_comment = BookComment.new
+    follow_users
   end
 
   def index
     @books = Book.all
     @book = Book.new
     @user = current_user
+    follow_users
   end
 
   def create
@@ -59,5 +61,10 @@ class BooksController < ApplicationController
     if(user_id != login_user_id)
       redirect_to "/books"
     end
+  end
+
+  def follow_users
+    @following_users = current_user.following_user
+    @follower_users = current_user.follower_user
   end
 end
