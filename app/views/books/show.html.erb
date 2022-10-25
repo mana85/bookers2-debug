@@ -17,16 +17,9 @@
           </td>
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
-          <td>
-            <% if @book.favorited_by?(current_user) %>
-              <%= link_to book_favorites_path(@book), method: :delete do %>
-                <p style="color:pink">♥<%= @book.favorites.count %></p>
-              <% end %>
-            <% else %>
-              <%= link_to book_favorites_path(@book), method: :post do %>
-                <p style="color:dodgerblue">♥<%= @book.favorites.count %></p>
-              <% end %>
-            <% end %>
+          <td id="favorite-button_<%= @book.id %>">
+            <!--いいね機能-->
+            <%= render 'favorites/favorite-btn', book: @book %>
           </td>
           <td>
             コメント：<%= @book.book_comments.count %>
