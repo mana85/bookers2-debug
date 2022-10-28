@@ -10,7 +10,11 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all
+    # @books = Book.all
+    @books = Book
+            .joins("left join favorites on books.id=favorites.book_id")
+            .group("books.id")
+            .order("count(favorites.id) desc")
     @book = Book.new
     @user = current_user
     follow_users
