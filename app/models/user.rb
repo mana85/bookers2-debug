@@ -15,6 +15,10 @@ class User < ApplicationRecord
   has_many :following_user, through: :follower, source: :followed
   has_many :follower_user, through: :followed, source: :follower
 
+  # DM機能用追記
+  has_many :entries, dependent: :destroy
+  has_many :messages, dependent: :destroy
+
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
 
