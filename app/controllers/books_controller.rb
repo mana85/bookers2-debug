@@ -7,6 +7,7 @@ class BooksController < ApplicationController
     @book_comments = BookComment.where(book_id: @book)
     @book_comment = BookComment.new
     follow_users
+    impressionist(@book, nil, :unique => [:ip_address])
   end
 
   def index

@@ -24,4 +24,8 @@ class Book < ApplicationRecord
       @book = Book.all
     end
   end
+
+  # PV数計測
+  is_impressionable
+
 end
