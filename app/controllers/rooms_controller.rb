@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
 
-  before_action :aurhenticate_user!
+  before_action :authenticate_user!
 
   def create
     @room = Room.create

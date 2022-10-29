@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     @UserEntry = Entry.where(user_id: @user.id)
     unless @user.id == current_user.id
       @currentUserEntry.each do |cu|
-        @userEntry.each do |u|
+        @UserEntry.each do |u|
           if cu.room_id == u.room_id then
             @isRoom = true
             @roomId = cu.room_id
@@ -23,6 +23,7 @@ class UsersController < ApplicationController
       @entry = Entry.new
       end
     end
+
     # フォローユーザー設定
     follow_users
   end
