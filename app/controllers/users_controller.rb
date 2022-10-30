@@ -23,9 +23,21 @@ class UsersController < ApplicationController
       @entry = Entry.new
       end
     end
-
     # フォローユーザー設定
     follow_users
+    # 投稿数計測
+    # 日付調べる
+    today = Date.today
+    # 前日比
+    @todayBooks = @books.where(created_at: today.all_day).count
+    @yestBooks = @books.where(created_at: (today-1).all_day).count
+    @dayBefore = comparison(@todayBooks, @yestBooks)
+    # 前週比
+    @today_books = @books.where(:created_at => (today-7).beginning_of_day..today.end_of_day)
+    # @thisWeekBooks = @books.where(created_at: Date.today.all_week(day[wday+1])).count
+    @thisWeekBooks = @books.where(:created_at => (today-7).beginning_of_day..today.end_of_day).count
+    @lastWeekBooks = @books.where(:created_at => (today-14).beginning_of_day..(today-8).end_of_day).count
+    @weekBefore = comparison(@thisWeekBooks, @lastWeekBooks)
   end
 
   def index
@@ -74,6 +86,15 @@ class UsersController < ApplicationController
   def follow_users
     @following_users = current_user.following_user
     @follower_users = current_user.follower_user
+  end
+
+  def comparison(now,before)
+    if before == 0
+      return "－"
+    else
+      comp = (now.to_f / before.to_f)*100
+      return comp.round.to_s + "％"
+    end
   end
 
 end
