@@ -58,6 +58,7 @@
       </div>
 
       <div>
+        <!--日別の投稿数-->
         <h3>過去7日分の日別投稿数</h3>
         <table class="table table-bordered">
           <tr>
@@ -75,6 +76,35 @@
             <% end %>
           </tr>
         </table>
+        <!--チャート-->
+        <canvas id="myChart" width="200" height="100"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+          var ctx = document.getElementById("myChart").getContext('2d');
+          var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: ["6日前", "5日前", "4日前", "3日前", "2日前", "1日前", "今日"],
+              datasets: [{
+                label: '投稿数',
+                data: <%= @dailyBookCounts %>,
+                backgroundColor: 'rgba(192, 192, 192, 1.0)',
+                borderColor: 'rgba(128, 128, 128, 1.0)',
+                lineTension: 0.3,
+                fill: false
+              }]
+            },
+            options: {
+              scales: {
+                "yaces_1": {
+                  beginAtZero: true,
+                  max: 10,
+                  min: 0,
+                }
+              }
+            }
+          });
+        </script>
       </div>
 
     </div>

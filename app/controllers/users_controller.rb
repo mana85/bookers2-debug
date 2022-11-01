@@ -42,7 +42,7 @@ class UsersController < ApplicationController
 
     # 過去7日分の日別投稿数
     @dailyBookCounts = Array.new
-    for i in 0..6 do
+    (0..6).each do |i|
       count = @books.where(created_at: (today-i).all_day).count
       @dailyBookCounts.insert(0, (count))
     end

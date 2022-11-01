@@ -58,3 +58,6 @@ gem 'devise'
 
 # PV数計測
 gem 'impressionist'
+
+# 投稿数の表示をグラフにする chart.js
+gem 'chart-js-rails', '~> 0.1.4'
