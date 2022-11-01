@@ -25,6 +25,7 @@ class UsersController < ApplicationController
     end
     # フォローユーザー設定
     follow_users
+
     # 投稿数計測
     # 日付調べる
     today = Date.today
@@ -38,6 +39,15 @@ class UsersController < ApplicationController
     @thisWeekBooks = @books.where(:created_at => (today-7).beginning_of_day..today.end_of_day).count
     @lastWeekBooks = @books.where(:created_at => (today-14).beginning_of_day..(today-8).end_of_day).count
     @weekBefore = comparison(@thisWeekBooks, @lastWeekBooks)
+
+    # 過去7日分の日別投稿数
+    @dailyBookCounts = Array.new
+    for i in 0..6 do
+      count = @books.where(created_at: (today-i).all_day).count
+      @dailyBookCounts.insert(0, (count))
+    end
+
+
   end
 
   def index

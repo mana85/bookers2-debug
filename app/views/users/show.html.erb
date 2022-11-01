@@ -57,6 +57,26 @@
         </table>
       </div>
 
+      <div>
+        <h3>過去7日分の日別投稿数</h3>
+        <table class="table table-bordered">
+          <tr>
+            <td>6日前</td>
+            <td>5日前</td>
+            <td>4日前</td>
+            <td>3日前</td>
+            <td>2日前</td>
+            <td>1日前</td>
+            <td>今日</td>
+          </tr>
+          <tr>
+            <% @dailyBookCounts.each do |count| %>
+              <td><%= count %></td>
+            <% end %>
+          </tr>
+        </table>
+      </div>
+
     </div>
   </div>
 </div>
