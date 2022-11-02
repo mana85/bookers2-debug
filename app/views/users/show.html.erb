@@ -76,6 +76,9 @@
             <% end %>
           </tr>
         </table>
+      </div>
+
+      <div>
         <!--チャート-->
         <canvas id="myChart" width="200" height="100"></canvas>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -105,6 +108,20 @@
             }
           });
         </script>
+      </div>
+
+      <div class="mt-3">
+        <!--非同期で投稿数検索-->
+        <%= form_with url: user_search_path(@user), local: false, method: :get do |f| %>
+          <%= f.date_field :created_at %>
+          <%= f.submit '検索', class: 'btn btn-sm btn-primary' %>
+        <% end %>
+
+        <div id="search_result">
+          <% if @search_book.present? %>
+            <%= render 'search', search_book: @search_book %>
+          <% end %>
+        </div>
       </div>
 
     </div>

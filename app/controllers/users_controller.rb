@@ -46,8 +46,6 @@ class UsersController < ApplicationController
       count = @books.where(created_at: (today-i).all_day).count
       @dailyBookCounts.insert(0, (count))
     end
-
-
   end
 
   def index
@@ -78,6 +76,18 @@ class UsersController < ApplicationController
   def followers
     user = User.find(params[:id])
     @users = user.follower_user.page(params[:page]).per(3).reverse_order
+  end
+
+  def search
+    @user = User.find(params[:user_id])
+    @books = @user.books
+    @book = Book.new
+    if params[:created_at] == ""
+      @search_book = "日付を選択してください"
+    else
+      create_at = params[:created_at]
+      @search_book = @books.where(['created_at LIKE ?', "#{create_at}%"]).count
+    end
   end
 
   private
