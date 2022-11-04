@@ -22,6 +22,7 @@
                 <%= link_to 'Edit', edit_group_path(group), class: "btn btn-sm btn-success" %>
               <% end %>
             </td>
+            <td><%= group.users.count %></td>
           </tr>
         <% end %>
       </tbody>

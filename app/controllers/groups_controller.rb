@@ -10,6 +10,13 @@ class GroupsController < ApplicationController
   def show
     @book = Book.new
     @group = Group.find(params[:id])
+    follow_users
+  end
+
+  def join
+    @group = Group.find(params[:group_id])
+    @group.users << current_user
+    redirect_to groups_path
   end
 
   def new
@@ -19,6 +26,7 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(group_params)
     @group.owner_id = current_user.id
+    @group.users << current_user
     if @group.save
       redirect_to groups_path
     else
@@ -37,6 +45,13 @@ class GroupsController < ApplicationController
     end
   end
 
+  def destroy
+    @group = Group.find(params[:id])
+    # グループ自体ではなくてcurrent_userがグループから削除される
+    @group.users.delete(current_user)
+    redirect_to groups_path
+  end
+
   private
 
   def group_params
@@ -48,6 +63,11 @@ class GroupsController < ApplicationController
     unless @group.owner_id == current_user.id
       redirect_to groups_path
     end
+  end
+
+  def follow_users
+    @following_users = current_user.following_user
+    @follower_users = current_user.follower_user
   end
 
 end
