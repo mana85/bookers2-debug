@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   resources :rooms, only: [:create, :index, :show]
   resources :groups do
     get "join" => "groups#join"
+    get "new/mail" => "groups#new_mail"
+    get "send/mail" => "groups#send_mail"
   end
 
   get "search" => "searches#index"
