@@ -77,12 +77,12 @@ Rails.application.configure do
   config.hosts.clear
   # メール送信機能
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-    config.action_mailer.rails_delivery_errors = true
+    config.action_mailer.raise_delivery_errors = true
     config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_setting = {
+    config.action_mailer.smtp_settings = {
       port:                 587,
       address:              'smtp.gmail.com',
-      user_name:            'メアド', # gmailのアドレス。あとで設定する。
+      user_name:            'メールアドレス', # gmailのアドレス。あとで設定する。
       password:             'アプリパスワード', #あとで設定する。
       authentication:       'login',
       enable_starttls_auto:  true
