@@ -14,7 +14,9 @@
           <%= image_tag book.user.get_profile_image, size:'50x50' %>
           <% end %>
         </td>
-        <td><%= link_to book.title,book %></td>
+        <td>
+          <%= link_to book.title,book %><br />
+        </td>
         <td><%= book.body %></td>
         <td id="favorite-button_<%= book.id %>">
           <!--いいね機能-->
@@ -22,6 +24,24 @@
         </td>
         <td>
           <p>コメント：<%= book.book_comments.count %></p>
+        </td>
+        <td>
+          <div id="star-rate<%= book.id %>"></div>
+          <script>
+            $('#star-rate<%= book.id %>').empty();
+            var el = document.querySelector('#star-rate<%= book.id %>');
+            var op = {
+              size      : 36,
+              starOff:   '<%= asset_path('star-off.png') %>',
+              starOn:    '<%= asset_path('star-on.png') %>',
+              scoreName: 'book[star]',
+              half: false,
+              readOnly: true,
+              score: <%= book.star %>,
+            };
+            raty(el,op);
+          </script>
+
         </td>
       </tr>
     <% end %>

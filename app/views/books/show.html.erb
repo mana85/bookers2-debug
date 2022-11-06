@@ -15,7 +15,10 @@
             <%= @book.user.name %>
             <% end %>
           </td>
-          <td><%= link_to @book.title, @book %></td>
+          <td>
+            <%= link_to @book.title, @book %><br />
+            <div id="star-rate<%= @book.id %>"></div>
+          </td>
           <td><%= @book.body %></td>
           <td>PV:<%= @book.impressionist_count %></td>
           <td id="favorite-button_<%= @book.id %>">
@@ -33,6 +36,21 @@
           <% end %>
         </tr>
       </table>
+
+      <script>
+        $('#star-rate<%= @book.id %>').empty();
+        var el = document.querySelector('#star-rate<%= @book.id %>');
+        var op = {
+           size      : 36,
+          starOff:   '<%= asset_path('star-off.png') %>',
+          starOn:    '<%= asset_path('star-on.png') %>',
+          scoreName: 'book[star]',
+          half: false,
+          readOnly: true,
+          score: <%= @book.star %>,
+        };
+        raty(el,op);
+      </script>
 
       <div class="book-comments-index">
         <%= render 'book_comments/index', book: @book, book_comments: @book_comments %>
