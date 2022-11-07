@@ -11,11 +11,8 @@ class BooksController < ApplicationController
   end
 
   def index
-    # @books = Book.all
-    @books = Book
-            .joins("left join favorites on books.id=favorites.book_id")
-            .group("books.id")
-            .order("count(favorites.id) desc")
+    # ソートする
+    @books = sort_prm(params[:sort])
     @book = Book.new
     @user = current_user
     follow_users
@@ -72,4 +69,22 @@ class BooksController < ApplicationController
     @following_users = current_user.following_user
     @follower_users = current_user.follower_user
   end
+
+  def sort_prm(prm)
+    if prm == "new"
+      Book
+          .all
+          .order("created_at desc")
+    elsif prm == "score"
+      Book
+          .all
+          .order("star desc")
+    else
+      Book
+          .joins("left join favorites on books.id=favorites.book_id")
+          .group("books.id")
+          .order("count(favorites.id) desc")
+    end
+  end
+
 end

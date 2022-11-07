@@ -1,3 +1,8 @@
+<div>
+  <% if request.path_info == books_path %>
+  <%= link_to '新着順', books_path(sort: "new") %>｜<%= link_to '評価順', books_path(sort: "score") %>
+  <% end %>
+</div>
 <table class='table table-hover table-inverse'>
   <thead>
     <tr>
