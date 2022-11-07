@@ -1,0 +1,39 @@
+<div class='container px-5 px-sm-0'>
+  <div class="row">
+    <h3>Books search for <%= @book_tag %></h3>
+    <table class='table table-hover table-inverse'>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Title</th>
+          <th>Opinion</th>
+          <th>Tag</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% @books.each do |book| %>
+          <td>
+            <%= link_to(book.user) do %>
+            <%= image_tag book.user.get_profile_image, size:'50x50' %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to book.title, book %>
+          </td>
+          <td>
+            <%= book.body %>
+          </td>
+          <td>
+            <% if book.category.present? %>
+              <%= link_to book.category, search_book_path(keyword: book.category) %>
+            <% end %>
+          </td>
+        </tr>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -28,4 +28,9 @@ class Book < ApplicationRecord
   # PV数計測
   is_impressionable
 
+  # タグ検索
+  def self.search(search_word)
+    Book.where(['category LIKE ?', "#{search_word}"])
+  end
+
 end

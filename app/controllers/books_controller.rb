@@ -18,6 +18,12 @@ class BooksController < ApplicationController
     follow_users
   end
 
+  def search_book
+    @book = Book.new
+    @books = Book.search(params[:keyword])
+    @book_tag = '"' + params[:keyword] + '"'
+  end
+
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
@@ -53,7 +59,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :star)
+    params.require(:book).permit(:title, :body, :star, :category)
   end
 
   def is_matching_login_user
@@ -72,15 +78,18 @@ class BooksController < ApplicationController
 
   def sort_prm(prm)
     if prm == "new"
+      # 新着順
       Book
           .all
           .order("created_at desc")
     elsif prm == "score"
+      # 評価順
       Book
           .all
           .order("star desc")
     else
       Book
+      # いいね順（デフォルト）
           .joins("left join favorites on books.id=favorites.book_id")
           .group("books.id")
           .order("count(favorites.id) desc")
